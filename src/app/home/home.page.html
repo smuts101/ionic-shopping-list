@@ -1,20 +1,65 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+
+
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="head-div" style="background-color:#DF013A;height: 100px;padding:5%;text-align: center;font-style: italic;">
+    <h1 style="color:#fff;border-bottom:1px solid #3d0815;;font-family: monospace;"><b>Shopping List</b></h1>
   </div>
+  <div class="container-2" ">
+    <ion-list>
+      <ion-item  *ngFor="let y of combined,let i =index">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="y.imgurl"></ion-img>
+        </ion-thumbnail>
+        <ion-label style="padding:5px;color: #3d0815;font-weight: 1em;font-weight: bold;" >{{y.item}} </ion-label>
+        <div class="buttons-divs">
+          <ion-icon name="trash-outline" (click)="removeItem(y.id)"></ion-icon>
+          <div class="edit-div"></div>
+          <div class="delete-div">
+            <ion-icon name="create-outline"  (click)="editItem(y.id,y.item)" ></ion-icon>
+           </div>
+        </div>
+      </ion-item>
+    </ion-list>
+</div>
+<div style="margin-top: 62%;">
+  <ion-item>
+    <ion-label position="floating">Item Name</ion-label>
+    <ion-input    style="border-bottom:2px solid red"   [(ngModel)]="item"  name="item"  type="text"    placeholder="" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label  stacked><ion-icon large name="folder-outline"></ion-icon>Choose a picture  </ion-label>
+    <div style="color:red;">
+      <p>{{  this.imageError}}</p>
+    </div>
+    <ion-input type="file" style="margin-top: 3%;"accept="image/*"id="myFileInput"(change)="fileChangeEvent($event)" ></ion-input>
+  </ion-item>
+</div>
+
+
+
+   <div *ngIf="valueEdit!=''">
+    <ion-item>
+      <ion-label position="floating">Item Name</ion-label>
+      <ion-input       text="text" [(ngModel)]="valueEdit" placeholder="Item name..." ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label  stacked>Image</ion-label>
+      <div style="color:rgb(163, 7, 7);">
+        <p>{{  this.imageError}}</p>
+      </div>
+      <ion-input type="file" accept="image/*"   (change)="editfileChangeEvent($event)"  ></ion-input>
+      
+    </ion-item>
+    <ion-button (click)="editItem(idEdit,valueEdit)"  >
+      <ion-icon slot="start" name="star"  ></ion-icon>
+      Left Icon
+    </ion-button>
+   </div>
+
+
+   <ion-button expand="block" style="--background:#196F3D;" expand="full" (click)="newItem()">Full Button</ion-button>
+ 
+
+
 </ion-content>
