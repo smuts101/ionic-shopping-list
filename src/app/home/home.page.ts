@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import * as firebase from 'firebase/app';
-require('firebase/firestore');
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +25,7 @@ export class HomePage  {
   arrImg:any = []
   combined:any = []
   unid=""
+  showEdit: number=0;
 
   constructor() {}
 
@@ -33,6 +36,7 @@ export class HomePage  {
       this.status = true;
       this.objItem1=this.item
       this.item = "";
+
       firebase.firestore().collection('items')
       .add(Object.assign({imgurl:this.cardImageBase64},{item:this.objItem1}))
       .then((res) => {
@@ -41,7 +45,6 @@ export class HomePage  {
       .catch((error) => {
         console.error("Error writing document: ", error);
       });
-    
    }
    }
    fileChangeEvent(fileInput: any) {
@@ -89,7 +92,7 @@ export class HomePage  {
 
   editItem(id,value){ 
 
-
+  this.showEdit=1;
     
     
  
@@ -156,18 +159,9 @@ export class HomePage  {
   }
   removeItem(removeID){
     firebase.firestore().collection("items").doc(removeID).delete();
-/*
-    for(let k = 0;k<=this.combined.length-1;k++){
-      if(this.combined[removeID]==this.combined[k]){
-         let temp = this.combined[k];
-         this.combined[temp] = this.combined[k+1];
-         this.combined[k] = this.combined[temp];
-         -- this.combined.length
-      }
-    }*/
   }
 
-  ngOnInit() {
+  ngOnInit(){
     firebase.firestore().collection('items').onSnapshot(res => {
       res.forEach(element => {
         this.combined.push(Object.assign(element.data(),{id:element.id}))
@@ -176,7 +170,11 @@ export class HomePage  {
       });
       console.log('Successful!!!');
     });
-    
   }
+
+  back(){
+    this.showEdit=0;
+  }
+
 
 }

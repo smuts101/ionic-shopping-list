@@ -9,10 +9,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-
 import * as firebase from 'firebase/app';
-
-
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/firestore';
 var firebaseConfig = {
   apiKey: "AIzaSyCasNI2qAoo17xvXOHM1rF3v9ARz5pdwaA",
   authDomain: "shopping-list-2e9f6.firebaseapp.com",
@@ -23,7 +23,7 @@ var firebaseConfig = {
   appId: "1:436891313869:web:9dd11985ec5a0a3829eb84",
   measurementId: "G-95DX6L2ZW1"
 };
-// Initialize Firebase
+//Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 @NgModule({
